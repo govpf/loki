@@ -2,9 +2,9 @@ name: Publish Docker images
 
 on:
   push:
-    branches: [ master ]
+    branches: [ govpf ]
   pull_request:
-    branches: [ master ]
+    branches: [ govpf ]
   schedule:
     - cron:  '0 0 * * 0'
 
