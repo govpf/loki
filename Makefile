@@ -355,7 +355,7 @@ docker-driver: docker-driver-clean
 	(docker export $$ID | tar -x -C clients/cmd/docker-driver/rootfs) && \
 	docker rm -vf $$ID
 	docker rmi rootfsimage -f
-	docker plugin create $(LOKI_DOCKER_DRIVER):$(PLUGIN_TAG)$(PLUGIN_ARCH) clients/cmd/docker-driver
+	#docker plugin create $(LOKI_DOCKER_DRIVER):$(PLUGIN_TAG)$(PLUGIN_ARCH) clients/cmd/docker-driver
 	docker plugin create $(LOKI_DOCKER_DRIVER):latest$(PLUGIN_ARCH) clients/cmd/docker-driver
 
 clients/cmd/docker-driver/docker-driver: $(APP_GO_FILES)
@@ -363,7 +363,7 @@ clients/cmd/docker-driver/docker-driver: $(APP_GO_FILES)
 	$(NETGO_CHECK)
 
 docker-driver-push: docker-driver
-	docker plugin push $(LOKI_DOCKER_DRIVER):$(PLUGIN_TAG)$(PLUGIN_ARCH)
+	#docker plugin push $(LOKI_DOCKER_DRIVER):$(PLUGIN_TAG)$(PLUGIN_ARCH)
 	docker plugin push $(LOKI_DOCKER_DRIVER):latest$(PLUGIN_ARCH)
 
 docker-driver-enable:
