@@ -453,30 +453,30 @@ images: promtail-image loki-image loki-canary-image docker-driver fluent-bit-ima
 # push(app, optional tag)
 # pushes the app, optionally tagging it differently before
 define push
-	$(SUDO) $(TAG_OCI)  $(IMAGE_PREFIX)/$(1):$(IMAGE_TAG) $(IMAGE_PREFIX)/$(1):$(2)
-	$(SUDO) $(PUSH_OCI) $(IMAGE_PREFIX)/$(1):$(2)
+	$(SUDO) $(TAG_OCI)  govpf/$(1):$(IMAGE_TAG) govpf/$(1):$(2)
+	$(SUDO) $(PUSH_OCI) govpf/$(1):$(2)
 endef
 
 # push-image(app)
 # pushes the app, also as :latest and :master
 define push-image
 	$(call push,$(1),$(IMAGE_TAG))
-	$(call push,$(1),master)
+	$(call push,$(1),govpf)
 	$(call push,$(1),latest)
 endef
 
 # promtail
 promtail-image:
-	$(SUDO) docker build -t $(IMAGE_PREFIX)/promtail:$(IMAGE_TAG) -f clients/cmd/promtail/Dockerfile .
+	$(SUDO) docker build -t govpf/promtail:$(IMAGE_TAG) -f clients/cmd/promtail/Dockerfile .
 promtail-image-cross:
-	$(SUDO) $(BUILD_OCI) -t $(IMAGE_PREFIX)/promtail:$(IMAGE_TAG) -f clients/cmd/promtail/Dockerfile.cross .
+	$(SUDO) $(BUILD_OCI) -t govpf/promtail:$(IMAGE_TAG) -f clients/cmd/promtail/Dockerfile.cross .
 
 promtail-debug-image: OCI_PLATFORMS=
 promtail-debug-image:
 	$(SUDO) $(BUILD_OCI) -t $(IMAGE_PREFIX)/promtail:$(IMAGE_TAG)-debug -f clients/cmd/promtail/Dockerfile.debug .
 
 promtail-push: promtail-image-cross
-	$(call push-image,promtail)
+	$(call push-image,promtail, latest)
 
 # loki
 loki-image:
