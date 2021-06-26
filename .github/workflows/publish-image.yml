@@ -35,8 +35,8 @@ jobs:
     -
       name: Build and push
       run: |
-        make docker-driver
         make docker-driver-push
+
   docker-images:
     runs-on: ubuntu-latest
     defaults:
